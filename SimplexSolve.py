@@ -60,7 +60,7 @@ class Simplex:
 
             if self.mode == MIN and self.table.GetDelta(i) > 0:
                 return False
-        
+
         return True  # план оптимален
 
     # подходит ли решение по условию
@@ -112,7 +112,7 @@ class Simplex:
 
         while True:
             self.table.UpdateDeltas()  # расчитываем дельты
-            
+
             print("\nIteration", iteration)
             iteration += 1
             self.table.Print()
@@ -159,7 +159,7 @@ class Simplex:
             self.table.a[self.table.GetRestrictionCount() - 1][i] = 0 if self.table.IsBasis(i) else -GetRealPart(self.table.a[index][i])
 
         self.table.a[-1][self.table.GetVariablesCount() - 1] = 1
-        self.table.AddBasis(real_index)
+        self.table.AddBasis(self.table.GetVariablesCount() - 1)
 
         print("Add GOMORY restriction")
         self.solve_gomory()
@@ -184,7 +184,7 @@ class Simplex:
             return [solve]
 
         b = int(solve.GetX(real_index))  # получаем новое условие
-        
+
         # готовим новые условия
         a1 = deepcopy(self.taskA)
         a2 = deepcopy(self.taskA)
